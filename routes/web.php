@@ -17,3 +17,5 @@ Route::get('/', function () {
 
 
 Route::post('/departure/create', 'DerpartureController@create')->name('departurecreate');
+
+Route::get('/allQuery', 'QueryController@allQuery')->name('allQuery');

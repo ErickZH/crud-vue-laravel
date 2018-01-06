@@ -52,7 +52,21 @@
 				</div>
 				<div class="columns">
 					<div class="column">
-						Tabla de departamentos
+						<div v-if="!departures.length">
+							No hay departamentos
+						</div>
+						<table v-else class="table">
+							<thead>
+								<th>#</th>
+								<th>Titulo</th>
+							</thead>
+							<tbody>
+								<tr v-for="departure in departures">
+									<td>@{{ departure.id }}</td>
+									<td>@{{ departure.title }}</td>
+								</tr>
+							</tbody>
+						</table>
 					</div>
 				</div>
 			</div>
@@ -126,7 +140,8 @@
 				messageModal: '',
 				modalDeparture: 0,
 				titleDeparture: '',
-				errorTitleDeparture: 0
+				errorTitleDeparture: 0,
+				departures: []
 			},
 			methods: {
 				closeModal() 
@@ -231,6 +246,19 @@
 							break;
 						}
 					}
+				},
+				allQuery() {
+					let me = this;
+
+					axios.get('{{ route('allQuery') }}')
+					.then(function(response) {
+						let answer = response.data;
+
+						me.departures = answer.departures;
+					})
+					.catch(function (error) {
+						console.log(error);
+					});
 				}
 			},
 		})
